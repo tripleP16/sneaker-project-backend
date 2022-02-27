@@ -13,14 +13,14 @@ import SaveUserDto from '../dto/save.user.dto';
 export class UserRepository {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-  //Metodo dentro del repositorio que permite crear un usuario
+  //Funcion dentro del repositorio que permite crear un usuario
   async createUser(user: SaveUserDto): Promise<User> {
     try {
       const userToSave = new this.userModel(user);
       return await userToSave.save();
     } catch (e) {
       if (e.message.indexOf('1100') != -1) {
-        throw new ConflictException('Este email esta en uso'); // Si encontramos el mismo email en la bd arroja 403
+        throw new ConflictException('Este email esta en uso'); // Si encontramos el mismo email en la bd arroja 409
       }
       throw new InternalServerErrorException();
     }
