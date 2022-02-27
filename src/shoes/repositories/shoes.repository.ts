@@ -17,4 +17,8 @@ export class ShoesRepository {
       throw new InternalServerErrorException();
     }
   }
+  //Funcion que busca un zapato por el id y lo retorna
+  async findShoeById(id: string): Promise<Shoe> {
+    return await this.shoe.findById({ _id: id });
+  }
 }
