@@ -13,15 +13,24 @@ export class AuthController {
     description: 'El recurso fue creado satisfactoriamente ',
   })
   @ApiResponse({ status: 401, description: 'Credenciales incorrectas' })
+  @ApiResponse({
+    status: 404,
+    description: 'No existe el registro dentro de la base de datos',
+  })
   @ApiResponse({ status: 500, description: 'Error interno en el servidor' })
   @HttpCode(HttpStatus.CREATED)
   @Post('/signin/admin')
   async signInAdmin(@Body() admin: LoginDto): Promise<any> {
     return ResponseToReturn(await this.authService.loginAdmin(admin));
   }
+
   @ApiResponse({
     status: 201,
     description: 'El recurso fue creado satisfactoriamente ',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'No existe el registro dentro de la base de datos',
   })
   @ApiResponse({ status: 401, description: 'Credenciales incorrectas' })
   @ApiResponse({ status: 500, description: 'Error interno en el servidor' })
