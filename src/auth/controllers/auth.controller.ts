@@ -16,7 +16,18 @@ export class AuthController {
   @ApiResponse({ status: 500, description: 'Error interno en el servidor' })
   @HttpCode(HttpStatus.CREATED)
   @Post('/signin/admin')
-  async signIn(@Body() admin: LoginDto): Promise<any> {
+  async signInAdmin(@Body() admin: LoginDto): Promise<any> {
     return ResponseToReturn(await this.authService.loginAdmin(admin));
+  }
+  @ApiResponse({
+    status: 201,
+    description: 'El recurso fue creado satisfactoriamente ',
+  })
+  @ApiResponse({ status: 401, description: 'Credenciales incorrectas' })
+  @ApiResponse({ status: 500, description: 'Error interno en el servidor' })
+  @HttpCode(HttpStatus.CREATED)
+  @Post('/signin/user')
+  async signInUser(@Body() user: LoginDto): Promise<any> {
+    return ResponseToReturn(await this.authService.loginUser(user));
   }
 }

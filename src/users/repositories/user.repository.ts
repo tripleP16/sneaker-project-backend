@@ -3,6 +3,7 @@ import {
   ForbiddenException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import User from '../models/user.entity';
@@ -24,5 +25,19 @@ export class UserRepository {
       }
       throw new InternalServerErrorException();
     }
+  }
+
+  //Funcion que busca un usuario por el email y lo retorna
+  async findUserByEmail(email: string): Promise<User> {
+    const userToFind = await this.userModel.findOne({ email: email });
+    if (!userToFind) {
+      throw new NotFoundException('Oops parece que no tenemos ese registro');
+    }
+    return userToFind;
+  }
+
+  //Funcion que busca un usuario por id y lo retorna
+  async findUserById(id: string): Promise<User> {
+    return await this.userModel.findById({ _id: id });
   }
 }
