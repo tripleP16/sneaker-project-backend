@@ -28,7 +28,7 @@ export class AdminRepository {
   //Funcion que busca un admin por el email y lo retorna
 
   async findAdminByEmail(email: string): Promise<Admin> {
-    const adminToFind = this.admin.findOne({ email: email });
+    const adminToFind = await this.admin.findOne({ email: email });
     if (!adminToFind) {
       throw new NotFoundException('Oops parece que no tenemos ese registro');
     }
