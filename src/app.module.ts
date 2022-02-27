@@ -6,6 +6,7 @@ import { DatabaseModule } from './database/database.module';
 import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
 import { BrandsModule } from './brands/brands.module';
+import { ShoesModule } from './shoes/shoes.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { BrandsModule } from './brands/brands.module';
     AdminModule,
     AuthModule,
     BrandsModule,
+    ShoesModule,
   ],
   controllers: [],
   providers: [],
