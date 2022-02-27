@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import Admin from '../models/admin.entity';
 import { Model } from 'mongoose';
@@ -22,5 +23,20 @@ export class AdminRepository {
       }
       throw new InternalServerErrorException();
     }
+  }
+
+  //Funcion que busca un admin por el email y lo retorna
+
+  async findAdminByEmail(email: string): Promise<Admin> {
+    const adminToFind = this.admin.findOne({ email: email });
+    if (!adminToFind) {
+      throw new NotFoundException('Oops parece que no tenemos ese registro');
+    }
+    return adminToFind;
+  }
+
+  //Funcion que busca un admin por el Id y lo retorna
+  async findAdminById(userId: string): Promise<Admin> {
+    return await this.admin.findById({ _id: userId });
   }
 }

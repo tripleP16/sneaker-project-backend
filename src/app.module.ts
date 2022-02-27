@@ -4,6 +4,7 @@ import { configValidationSchema } from './config.schema';
 import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
 import { AdminModule } from './admin/admin.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { AdminModule } from './admin/admin.module';
     }),
     DatabaseModule,
     AdminModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
