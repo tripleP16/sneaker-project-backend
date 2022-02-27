@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
 import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
+import { BrandsModule } from './brands/brands.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AuthModule } from './auth/auth.module';
     DatabaseModule,
     AdminModule,
     AuthModule,
+    BrandsModule,
   ],
   controllers: [],
   providers: [],
