@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
-import { ResponseToReturn } from 'src/shared/response';
+import { ResponseToReturn } from '../../shared/response';
 import RegisterUserDto from '../dto/register.user.dto';
 import { UsersService } from '../services/users.service';
 
