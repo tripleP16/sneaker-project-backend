@@ -74,6 +74,10 @@ export class UsersController {
     return ResponseToReturn(await this.userService.deleteShoe(id, user._id));
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'El recurso fue encontrado ',
+  })
   @ApiResponse({ status: 404, description: 'El usuario no existe' })
   @ApiResponse({ status: 500, description: 'Error interno en el servidor' })
   @ApiResponse({ status: 401, description: 'No esta autorizado' })
