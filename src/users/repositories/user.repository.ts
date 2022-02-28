@@ -43,9 +43,32 @@ export class UserRepository {
   }
   //Funcion que permite añadir un zapato a la lista de favoritos
   async addShoeToFavorites(id: string, shoe: Shoe): Promise<User> {
-    return await this.userModel.findByIdAndUpdate(
-      { _id: id },
-      { $push: { favorites: shoe } },
-    );
+    const user = await this.findUserById(id);
+    if (!this.validateShoe(shoe, user.favorites)) {
+      return await this.userModel.findByIdAndUpdate(
+        { _id: id },
+        { $push: { favorites: shoe } },
+      );
+    }
+    throw new ConflictException('Ese zapato ya esta en la lista de favoritos');
+  }
+
+  validateShoe(shoe: Shoe, favorites: Shoe[]): boolean {
+    const findShoe = favorites.filter((element) => element._id === shoe._id);
+    if (findShoe.length >= 1) {
+      return true;
+    }
+    return false;
+  }
+
+  async deleteShoeFromList(id: string, shoe: Shoe): Promise<User> {
+    const user = await this.findUserById(id);
+    if (this.validateShoe(shoe, user.favorites)) {
+      return await this.userModel.findByIdAndUpdate(
+        { _id: id },
+        { $pull: { favorites: { _id: shoe._id } } },
+      );
+    }
+    throw new ConflictException('Ese zapato no esta en la lista de favoritos');
   }
 }
