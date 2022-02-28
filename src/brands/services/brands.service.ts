@@ -17,4 +17,7 @@ export class BrandsService {
     };
     return await this.brandRepository.createBrand(brandToSave);
   }
+  async getBrands(): Promise<Brand[]> {
+    return await this.brandRepository.getBrands();
+  }
 }

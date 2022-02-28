@@ -39,4 +39,8 @@ export class BrandRepository {
       throw new NotFoundException('El recurso no ha sido encontrado');
     }
   }
+
+  async getBrands(): Promise<Brand[]> {
+    return await this.brand.find();
+  }
 }

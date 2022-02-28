@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -27,5 +28,15 @@ export class BrandsController {
   @Post('/')
   async createBrand(@Body() brand: RegisterBrandDto): Promise<any> {
     return ResponseToReturn(await this.brandsService.registerBrand(brand));
+  }
+
+  @ApiResponse({
+    status: 200,
+    description: 'El recurso fue encontrado satisfactoriamente',
+  })
+  @HttpCode(HttpStatus.OK)
+  @Get('/')
+  async getBrands(): Promise<any> {
+    return ResponseToReturn(await this.brandsService.getBrands());
   }
 }
