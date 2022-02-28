@@ -1,12 +1,12 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Param,
   Patch,
   Post,
-  Put,
   UseGuards,
 } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
@@ -49,5 +49,15 @@ export class StoreController {
     return ResponseToReturn(
       await this.storeService.addShoeToStore(id, shoe_id),
     );
+  }
+
+  @ApiResponse({
+    status: 200,
+    description: 'El recurso fue encontrado',
+  })
+  @HttpCode(HttpStatus.OK)
+  @Get('/')
+  async getStores(): Promise<any> {
+    return ResponseToReturn(await this.storeService.getStores());
   }
 }

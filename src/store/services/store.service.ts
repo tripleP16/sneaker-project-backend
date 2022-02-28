@@ -29,4 +29,8 @@ export class StoreService {
     }
     return await this.storeRepository.addShoeToStore(shoe, id.id);
   }
+
+  async getStores(): Promise<Store[]> {
+    return await this.storeRepository.findStores();
+  }
 }

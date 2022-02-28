@@ -33,4 +33,8 @@ export default class StoreRepository {
       throw new NotFoundException('El recurso no ha sido encontrado');
     }
   }
+
+  async findStores(): Promise<Store[]> {
+    return await this.store.find();
+  }
 }
