@@ -40,8 +40,21 @@ export class UsersService {
     if (!shoe) {
       throw new NotFoundException('Parece que no encontramos ese zapato');
     }
-    return await (
-      await this.userRepository.addShoeToFavorites(userId, shoe)
-    ).favorites;
+    await this.userRepository.addShoeToFavorites(userId, shoe);
+  }
+  async deleteShoe(id: uuidDto, userId: string): Promise<any> {
+    const shoe = await this.shoeRepository.findShoeById(id.id);
+    if (!shoe) {
+      throw new NotFoundException('Parece que no encontramos ese zapato');
+    }
+    await this.userRepository.deleteShoeFromList(userId, shoe);
+  }
+
+  async getFavorites(userId: string): Promise<any> {
+    const user = await this.userRepository.findUserById(userId);
+    if (user) {
+      return user.favorites;
+    }
+    throw new NotFoundException('Ese usuario no existe');
   }
 }
