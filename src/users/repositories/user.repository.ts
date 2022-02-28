@@ -9,6 +9,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import User from '../models/user.entity';
 import { Model } from 'mongoose';
 import SaveUserDto from '../dto/save.user.dto';
+import Shoe from '../../shoes/models/shoe.entity';
 
 @Injectable()
 export class UserRepository {
@@ -39,5 +40,12 @@ export class UserRepository {
   //Funcion que busca un usuario por id y lo retorna
   async findUserById(id: string): Promise<User> {
     return await this.userModel.findById({ _id: id });
+  }
+  //Funcion que permite añadir un zapato a la lista de favoritos
+  async addShoeToFavorites(id: string, shoe: Shoe): Promise<User> {
+    return await this.userModel.findByIdAndUpdate(
+      { _id: id },
+      { $push: { favorites: shoe } },
+    );
   }
 }

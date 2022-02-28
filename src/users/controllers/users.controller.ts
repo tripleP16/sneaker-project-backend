@@ -1,8 +1,21 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
+import UuidDto from '../../shared/uuid.dto';
 import { ResponseToReturn } from '../../shared/response';
 import RegisterUserDto from '../dto/register.user.dto';
 import { UsersService } from '../services/users.service';
+import { JwtUserGuard } from '../../auth/guards/user.guard';
+import { GetUser } from '../../auth/decorators/get.user.decorator';
+import ReturnUser from '../dto/return.user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -18,5 +31,22 @@ export class UsersController {
   @HttpCode(HttpStatus.CREATED)
   async registerUser(@Body() user: RegisterUserDto): Promise<any> {
     return ResponseToReturn(await this.userService.registerUser(user));
+  }
+
+  @ApiResponse({
+    status: 200,
+    description: 'El recurso fue actualizado satisfactoriamente ',
+  })
+  @ApiResponse({ status: 409, description: 'El email esta en uso' })
+  @ApiResponse({ status: 500, description: 'Error interno en el servidor' })
+  @ApiResponse({ status: 401, description: 'No esta autorizado' })
+  @UseGuards(JwtUserGuard)
+  @HttpCode(HttpStatus.OK)
+  @Patch('/shoe/:id')
+  async addShoeToFavorite(
+    @Param() id: UuidDto,
+    @GetUser() user: ReturnUser,
+  ): Promise<any> {
+    return ResponseToReturn(await this.userService.addShoe(id, user._id));
   }
 }
