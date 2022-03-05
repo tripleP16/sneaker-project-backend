@@ -11,9 +11,6 @@ import {
   MinLength,
 } from 'class-validator';
 
-const today = new Date();
-const maxDate = new Date(today.setFullYear(today.getFullYear() - 14)); //Formula para encontrar la fecha minima de registro que es de al menos 14 años
-
 // Dto para el registro de usuarios
 export default class RegisterUserDto {
   @ApiProperty({
@@ -49,12 +46,11 @@ export default class RegisterUserDto {
   @MinLength(8)
   password: string;
   @ApiProperty({
-    description: 'Fecha de nacimiento del usuario, debe tener al menos 14 años',
+    description: 'Fecha de nacimiento del usuario',
     example: '2000-09-16',
   })
   @IsDate()
   @IsNotEmpty()
-  @MaxDate(maxDate)
   @Type(() => Date)
   birthday: Date;
 }
