@@ -30,7 +30,16 @@ export class StoreService {
     return await this.storeRepository.addShoeToStore(shoe, id.id);
   }
 
-  async getStores(): Promise<Store[]> {
-    return await this.storeRepository.findStores();
+  async getStores(): Promise<SaveStoreDto[]> {
+    const stores = await this.storeRepository.findStores();
+    const storesToReturn: SaveStoreDto[] = stores.map((store) => {
+      const aux: SaveStoreDto = {
+        _id: store._id,
+        name: store.name,
+        rating: store.rating,
+      };
+      return aux;
+    });
+    return storesToReturn;
   }
 }

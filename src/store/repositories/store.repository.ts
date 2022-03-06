@@ -37,4 +37,8 @@ export default class StoreRepository {
   async findStores(): Promise<Store[]> {
     return await this.store.find();
   }
+
+  async findStoreById(id: string): Promise<Store> {
+    return await this.store.findById({ _id: id });
+  }
 }

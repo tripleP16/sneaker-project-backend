@@ -6,12 +6,14 @@ import {
   HttpStatus,
   Param,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 import { JwtAdminAuthGuard } from 'src/auth/guards/admin.guard';
 import { ResponseToReturn } from 'src/shared/response';
 import UuidDto from 'src/shared/uuid.dto';
+import { FindShoesDto } from '../dto/find.shoe.dto';
 import RegisterShoeDto from '../dto/register.shoe.dto';
 import { ShoesService } from '../services/shoes.service';
 
@@ -50,7 +52,7 @@ export class ShoesController {
     description: 'El recurso fue obtenido satisfactoriamente',
   })
   @HttpCode(HttpStatus.OK)
-  async getAllShoes(): Promise<any> {
-    return ResponseToReturn(await this.shoeService.getShoes());
+  async getAllShoes(@Query() filter: FindShoesDto): Promise<any> {
+    return ResponseToReturn(await this.shoeService.getShoes(filter));
   }
 }

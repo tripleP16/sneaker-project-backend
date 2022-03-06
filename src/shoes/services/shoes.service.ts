@@ -6,12 +6,15 @@ import { ShoesRepository } from '../repositories/shoes.repository';
 import SaveShoeDto from '../dto/save.shoe.dto';
 import UuidGenerator from '../../shared/id.generator';
 import Shoe from '../models/shoe.entity';
+import { FindShoesDto } from '../dto/find.shoe.dto';
+import StoreRepository from 'src/store/repositories/store.repository';
 
 @Injectable()
 export class ShoesService {
   constructor(
     private readonly shoesRepository: ShoesRepository,
     private readonly brandRepository: BrandRepository,
+    private readonly storeRepository: StoreRepository,
   ) {}
   async createShoe(
     shoe: registerShoeDto,
@@ -33,7 +36,28 @@ export class ShoesService {
     return shoeToSave;
   }
 
-  async getShoes(): Promise<Shoe[]> {
-    return await this.shoesRepository.findShoes();
+  async getShoes(filter: FindShoesDto): Promise<Shoe[]> {
+    if (!filter.brandId && !filter.storeId) {
+      return await this.shoesRepository.findShoes();
+    }
+    if (!filter.storeId && filter.brandId) {
+      const brand = await this.brandRepository.FindBrandById(filter.brandId);
+      return brand.shoes;
+    }
+    if (!filter.brandId && filter.storeId) {
+      const store = await this.storeRepository.findStoreById(filter.storeId);
+      return store.shoes;
+    }
+    if (filter.brandId && filter.storeId) {
+      const brand = await this.brandRepository.FindBrandById(filter.brandId);
+      const store = await this.storeRepository.findStoreById(filter.storeId);
+      const shoes = brand.shoes.concat(store.shoes);
+      const foo = new Map();
+      for (const shoe of shoes) {
+        foo.set(shoe._id, shoe);
+      }
+      const final = [...foo.values()];
+      return final;
+    }
   }
 }

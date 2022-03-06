@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import Shoe from '../models/shoe.entity';
 import { Model } from 'mongoose';
 import SaveShoeDto from '../dto/save.shoe.dto';
+import { FindShoesDto } from '../dto/find.shoe.dto';
+import Brand from 'src/brands/models/brand.entity';
 
 @Injectable()
 export class ShoesRepository {
