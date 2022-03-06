@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import Shoe from '../../shoes/models/shoe.entity';
+import { Category } from '../common/categories.enum';
 @Schema()
 export default class Brand extends Document {
   @Prop()
@@ -8,7 +9,7 @@ export default class Brand extends Document {
   @Prop()
   name: string;
   @Prop()
-  category: string;
+  category: Category;
   @Prop()
   shoes: Shoe[];
 }

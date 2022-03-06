@@ -5,6 +5,7 @@ import registerShoeDto from '../dto/register.shoe.dto';
 import { ShoesRepository } from '../repositories/shoes.repository';
 import SaveShoeDto from '../dto/save.shoe.dto';
 import UuidGenerator from '../../shared/id.generator';
+import Shoe from '../models/shoe.entity';
 
 @Injectable()
 export class ShoesService {
@@ -30,5 +31,9 @@ export class ShoesService {
     const newShoe = await this.shoesRepository.createShoe(shoeToSave);
     await this.brandRepository.addShoe(newShoe, brandId.id);
     return shoeToSave;
+  }
+
+  async getShoes(): Promise<Shoe[]> {
+    return await this.shoesRepository.findShoes();
   }
 }

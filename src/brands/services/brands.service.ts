@@ -17,7 +17,16 @@ export class BrandsService {
     };
     return await this.brandRepository.createBrand(brandToSave);
   }
-  async getBrands(): Promise<Brand[]> {
-    return await this.brandRepository.getBrands();
+  async getBrands(): Promise<SaveBrandDto[]> {
+    const brands = await this.brandRepository.getBrands();
+    const brandsToReturn: SaveBrandDto[] = brands.map((brand) => {
+      const brandToReturn: SaveBrandDto = {
+        name: brand.name,
+        category: brand.category,
+        _id: brand._id,
+      };
+      return brandToReturn;
+    });
+    return brandsToReturn;
   }
 }

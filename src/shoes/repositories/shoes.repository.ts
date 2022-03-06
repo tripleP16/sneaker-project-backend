@@ -21,4 +21,9 @@ export class ShoesRepository {
   async findShoeById(id: string): Promise<Shoe> {
     return await this.shoe.findById({ _id: id });
   }
+
+  //Funcion que retorna los zapatos
+  async findShoes(): Promise<Shoe[]> {
+    return await this.shoe.find();
+  }
 }

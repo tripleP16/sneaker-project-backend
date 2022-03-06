@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Param,
@@ -36,5 +37,20 @@ export class ShoesController {
     @Param() brandId: UuidDto,
   ): Promise<any> {
     return ResponseToReturn(await this.shoeService.createShoe(shoe, brandId));
+  }
+
+  @Get('/')
+  @ApiResponse({
+    status: 404,
+    description: 'No encontramos esa marca en nuestros registros',
+  })
+  @ApiResponse({ status: 500, description: 'Error interno en el servidor' })
+  @ApiResponse({
+    status: 200,
+    description: 'El recurso fue obtenido satisfactoriamente',
+  })
+  @HttpCode(HttpStatus.OK)
+  async getAllShoes(): Promise<any> {
+    return ResponseToReturn(await this.shoeService.getShoes());
   }
 }
