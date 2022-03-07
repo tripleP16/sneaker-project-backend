@@ -31,12 +31,17 @@
 ```bash
 $ npm install
 ```
+
+## Documentacion 
+Para ver la documentacion realizada con swagger : 
+https://sneaker-project.herokuapp.com/api
+
 ## Deployment 
 Deploy realizado a heroku 
 https://sneaker-project.herokuapp.com
 
 
-## Correr la api
+## Correr la api en local 
 
 ```bash
 # development
